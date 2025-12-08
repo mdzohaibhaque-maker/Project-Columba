@@ -1,419 +1,965 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <title>Handshake Fellows - Coding Evaluation Guide</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Handshake AI – Coding Capability Evaluation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="static/image.png" />
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+  <!-- Highlight.js for syntax highlighting -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+  />
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    .hs-code-highlighted { background: #0d1117; border-radius: 0.375rem; padding: 1rem; border: 1px solid #30363d; }
+    .hs-code-highlighted code { color: #e6edf3; font-size: 0.875rem; line-height: 1.5; }
+    pre code { font-size: 0.875rem; line-height: 1.5; }
+    .hljs { background: transparent; padding: 0; }
+    .hs-collapsible-section { margin-bottom: 1.5rem; }
+    details { cursor: pointer; }
+    details summary { user-select: none; }
+    details summary:hover { color: var(--bs-primary); }
+    .hs-details-custom summary { outline: none; }
+    .hs-code-block { background: #0d1117; border: 1px solid #30363d; border-radius: 0.375rem; padding: 1rem; color: #e6edf3; }
+    .hs-edge-table { margin-bottom: 0; }
+    .hs-edge-table thead th { font-weight: 600; font-size: 0.8125rem; }
+    .cursor-pointer { cursor: pointer; }
+  </style>
 </head>
-<body>
-  <!-- Top bar / Handshake-like theme -->
-  <header class="top-bar">
-    <div class="top-bar-inner">
-      <div class="brand">
-        <div class="brand-logo">H</div>
-        <div>
-          <div class="brand-title">Handshake Fellows</div>
-          <div class="brand-subtitle">Coding Evaluation Guide</div>
-        </div>
+<body data-bs-spy="scroll" data-bs-target="#hs-step-nav" data-bs-offset="100" tabindex="0">
+
+  <!-- Top Navbar -->
+  <nav class="navbar navbar-expand-lg hs-navbar fixed-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
+        <span class="hs-logo-circle">H</span>
+        <span class="fw-semibold">Handshake AI &bullet; Project Columba</span>
+      </a>
+      <button
+        class="navbar-toggler border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+        aria-controls="navbarContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav align-items-lg-center gap-lg-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#workflow">Workflow</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#dimensions">Dimensions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#failure-examples">Failure Examples</a>
+          </li>
+          <li class="nav-item">
+            <span class="badge rounded-pill hs-pill ms-lg-2">Annotator v2.1</span>
+          </li>
+        </ul>
       </div>
-      <div class="badge">v2 · Internal Use Only</div>
     </div>
-  </header>
+  </nav>
 
-  <main class="page">
-    <!-- Intro card -->
-    <section class="card intro-card">
-      <h1>How to use this guide</h1>
-      <p>
-        This page helps Handshake Fellows learn how we evaluate coding answers.
-        Each tab explains one dimension with
-        <strong>PASS vs FAIL examples</strong> so you can practice grading like a teammate.
-      </p>
-      <div class="intro-bullets">
-        <div class="pill">✅ Choose the correct <strong>context</strong>.</div>
-        <div class="pill">🧪 Grade each <strong>dimension</strong> separately.</div>
-        <div class="pill">🧠 Use the <strong>examples</strong> as your reference.</div>
-      </div>
-    </section>
+  <!-- Layout -->
+  <div class="container-fluid" id="top">
+    <div class="row g-0 flex-nowrap">
 
-    <!-- Layout: tabs + content -->
-    <section class="layout">
-      <!-- Tab buttons -->
-      <nav class="tabs" aria-label="Coding evaluation tabs">
-        <button class="tab-button active" data-tab="context">1. Context Types</button>
-        <button class="tab-button" data-tab="execution">2. Code Execution</button>
-        <button class="tab-button" data-tab="logic">3. Code Logic</button>
-        <button class="tab-button" data-tab="explanation">4. Code Explanation</button>
-        <button class="tab-button" data-tab="style">5. Code Style</button>
-        <button class="tab-button" data-tab="instructions">6. Instruction Following</button>
-        <button class="tab-button" data-tab="summary">Quick Summary</button>
+      <!-- Side navigation -->
+      <nav class="col-12 col-md-3 col-xl-2 hs-sidenav p-0 border-end border-secondary-subtle">
+        <div class="offcanvas-md offcanvas-start hs-sidenav-offcanvas" tabindex="-1" id="sideNav">
+          <div class="offcanvas-header d-md-none">
+            <h5 class="offcanvas-title">Navigation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body p-3 p-md-3">
+            <p class="text-uppercase small fw-semibold text-secondary mb-3">Quick Nav</p>
+            <nav class="nav flex-column nav-pills hs-step-nav" id="hs-step-nav">
+              <a href="#overview" class="nav-link active" data-bs-dismiss="offcanvas"><span class="step-index">1</span> Overview</a>
+              <a href="#workflow" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">2</span> Workflow</a>
+              <a href="#dimensions" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">3</span> Dimensions</a>
+              <a href="#failure-examples" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">4</span> Failure Examples</a>
+            </nav>
+          </div>
+        </div>
       </nav>
 
-      <!-- Tab contents -->
-      <section class="tab-content-container">
-        <!-- 1. Context tab -->
-        <article class="tab-content active" id="tab-context">
-          <h2>1. Context Types</h2>
-          <p class="muted">
-            First, decide:
-            <strong>is this a full solution, or just an example?</strong>
-          </p>
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-xl-10 px-3 px-md-4 py-5 mt-5">
 
-          <div class="grid-2">
-            <div class="card subtle">
-              <h3>Full Solution / Script</h3>
-              <p class="muted small">User wants a complete, runnable program.</p>
-              <ul class="small">
-                <li>• Must include imports and helpers</li>
-                <li>• Should run as-is</li>
-                <li>• Treated like “shippable” code</li>
-              </ul>
-              <p class="small bold">Example prompt:</p>
-              <pre class="code small">
-"Build a Python script that checks a website's status every 5 minutes
-and logs the result to a file."
-              </pre>
+        <!-- Hero / Overview -->
+        <section id="overview" class="mb-5">
+          <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+              <h1 class="display-5 fw-bold mb-3">Coding Capability Evaluation</h1>
+              <p class="lead text-secondary mb-4">
+                A structured framework for assessing AI-generated code across five critical dimensions.
+                Use this guide to ensure consistent, fair evaluation of coding solutions.
+              </p>
+              <div class="d-flex flex-wrap gap-2">
+                <a href="#workflow" class="btn btn-sm" style="background: linear-gradient(135deg, var(--hs-primary), var(--hs-yellow)); color: #05060a; border: none;">
+                  Start Evaluation <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
 
-            <div class="card subtle">
-              <h3>Illustrative Snippet</h3>
-              <p class="muted small">User wants a short example or explanation.</p>
-              <ul class="small">
-                <li>• Imports can be omitted</li>
-                <li>• Focus is on clarity, not completeness</li>
-                <li>• Good for teaching and demos</li>
-              </ul>
-              <p class="small bold">Example prompt:</p>
-              <pre class="code small">
-"Show a simple example of a Python dictionary and how to access
-a value by key."
-              </pre>
+            <div class="col-lg-5">
+              <div class="card hs-card-gradient h-100 border">
+                <div class="card-body p-4">
+                  <h5 class="card-title text-white mb-3">Five Evaluation Dimensions</h5>
+                  <ul class="small list-unstyled">
+                    <li class="mb-2"><i class="bi bi-play-circle-fill" style="color: var(--hs-primary);"></i> Code Execution</li>
+                    <li class="mb-2"><i class="bi bi-diagram-2-fill" style="color: var(--hs-primary);"></i> Code Logic</li>
+                    <li class="mb-2"><i class="bi bi-chat-dots-fill" style="color: var(--hs-primary);"></i> Code Explanation</li>
+                    <li class="mb-2"><i class="bi bi-palette-fill" style="color: var(--hs-primary);"></i> Code Style</li>
+                    <li><i class="bi bi-check-circle-fill" style="color: var(--hs-primary);"></i> Instruction Following</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WORKFLOW SECTION -->
+        <section id="workflow" class="mb-5">
+          <h2 class="h3 mb-1">1. Evaluation Workflow</h2>
+          <p class="small text-secondary mb-4">Determine code context first—this dictates how strict Code Execution rules should be.</p>
+
+          <!-- Step 1: Determine Code Context -->
+          <div class="hs-collapsible-section">
+            <h3 class="h5 mb-3"><i class="bi bi-arrow-right-circle"></i> Step 1: Determine Code Context (Crucial)</h3>
+            <p class="text-secondary mb-3 small">Before grading, classify the response into one of two contexts. This determines the strictness of the <strong>"Code Execution"</strong> rules.</p>
+
+            <div class="row g-3 mb-4">
+              <!-- Context A -->
+              <div class="col-lg-6">
+                <div class="card hs-card-light h-100 border">
+                  <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle">
+                    <i class="bi bi-box-seam"></i> Context A: Full Solution / Script
+                  </div>
+                  <div class="card-body small">
+                    <p class="text-secondary mb-2"><strong>User Asked For:</strong> Task to be completed (e.g., "Write a script to scrape a website," "Create a snake game")</p>
+                    <p class="text-secondary mb-3"><strong>Standard:</strong> Code must be copy-paste executable.</p>
+                    <ul class="text-secondary small mb-3 ps-3">
+                      <li>All imports must be present</li>
+                      <li>No undefined variables</li>
+                      <li>No placeholder code that breaks</li>
+                      <li>Script should run from start to finish</li>
+                      <li>External resources (API keys, paths) may use placeholders</li>
+                    </ul>
+                    <details class="hs-details-custom">
+                      <summary class="small text-primary cursor-pointer"><i class="bi bi-chevron-right"></i> View Example</summary>
+                      <div class="mt-2 pt-2 border-top border-secondary-subtle">
+                        <pre class="hs-code-highlighted mt-2"><code class="language-python">import requests
+
+def fetch(url: str) -> str:
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.text
+
+if __name__ == "__main__":
+    print(fetch("https://example.com"))</code></pre>
+                        <p class="text-success-emphasis small mt-2 mb-0"><strong>✔ Fully runnable</strong> • <strong>✔ Contains imports</strong> • <strong>✔ No missing definitions</strong></p>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Context B -->
+              <div class="col-lg-6">
+                <div class="card hs-card-light h-100 border">
+                  <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle">
+                    <i class="bi bi-code"></i> Context B: Illustrative Snippet / Concept
+                  </div>
+                  <div class="card-body small">
+                    <p class="text-secondary mb-2"><strong>User Asked For:</strong> Explanation or syntax example (e.g., "How does list.sort work?")</p>
+                    <p class="text-secondary mb-3"><strong>Standard:</strong> Code must be syntactically valid, but...</p>
+                    <ul class="text-secondary small mb-3 ps-3">
+                      <li>Imports may be omitted if they distract</li>
+                      <li>Code does not have to be executable as standalone</li>
+                      <li>Readability and conceptual accuracy matter more than completeness</li>
+                    </ul>
+                    <details class="hs-details-custom">
+                      <summary class="small text-primary cursor-pointer"><i class="bi bi-chevron-right"></i> View Example</summary>
+                      <div class="mt-2 pt-2 border-top border-secondary-subtle">
+                        <pre class="hs-code-highlighted mt-2"><code class="language-python">numbers = [3, 1, 2]
+numbers.sort()
+print(numbers)  # [1, 2, 3]</code></pre>
+                        <p class="text-info-emphasis small mt-2 mb-0"><strong>✔ Concept illustrated</strong> • <strong>✔ No need for boilerplate</strong> • <strong>✔ Syntactically valid</strong></p>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="note">
-            🧠 <strong>Handshake Tip:</strong> A missing import in a
-            <strong>full script</strong> is a bigger issue than in a tiny snippet.
+          <div class="alert alert-primary-subtle border-primary-subtle p-3" role="alert">
+            <p class="mb-2"><strong><i class="bi bi-lightbulb"></i> Key Point:</strong></p>
+            <p class="mb-0">Each of the 5 dimensions below is graded <strong>independently</strong>. A response does <strong>NOT</strong> need to PASS all dimensions to receive credit—evaluate each separately based on its own criteria.</p>
           </div>
-        </article>
+        </section>
 
-        <!-- 2. Execution tab -->
-        <article class="tab-content" id="tab-execution">
-          <h2>2. Code Execution</h2>
-          <p class="muted">
-            Question:
-            <strong>“Would this code actually run?”</strong>
-          </p>
+        <!-- DIMENSIONS SECTION -->
+        <section id="dimensions" class="mb-5">
+          <h2 class="h3 mb-1">2. Dimension Rubrics & Edge Cases</h2>
+          <p class="small text-secondary mb-4">Five independent evaluation dimensions with comprehensive specifications.</p>
 
-          <h3><span class="tag pass">PASS</span> Runnable script</h3>
-          <p class="small muted">
-            Prompt: “Write a Python script that prints all even numbers from 1 to 10.”
-          </p>
-          <pre class="code small">
-for i in range(1, 11):
-    if i % 2 == 0:
-        print(i)
-          </pre>
+          <!-- Dimension 1: Execution -->
+          <div class="card hs-card-light border mb-4">
+            <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle">
+              <i class="bi bi-play-circle"></i> Dimension 1: Code Execution
+            </div>
+            <div class="card-body small">
+              <p class="text-secondary mb-3"><strong>Definition:</strong> The code must run without error in the expected context. Execution quality determines whether the code will execute as intended or fail due to syntax or missing components.</p>
 
-          <h3><span class="tag fail">FAIL</span> Missing import in full script</h3>
-          <p class="small muted">
-            Prompt: “Write a script to ping google.com once.”
-          </p>
-          <pre class="code small">
-# ❌ This will crash because os is not imported
-def ping_google():
-    os.system("ping -c 1 google.com")
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-primary cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> PASS Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-success-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Syntax Validity</strong><br/>Syntax must follow the rules of the language. Small format variations are fine, but missing punctuation or misalignment is not.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add(a, b):
+    return a + b</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Contextual Completeness (Full Solutions)</strong><br/>All imports, definitions, and dependencies must exist.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">import json
 
-ping_google()
-          </pre>
-          <p class="small fail-text">
-            Execution FAIL: For a full script, missing <code>import os</code> means it can’t run.
-          </p>
+def parse_json(text):
+    return json.loads(text)
+print(parse_json('{"x": 1}'))</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Runtime Stability</strong><br/>Code must not crash on typical input. Error handling not required unless part of instructions.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def safe_div(a, b):
+    return None if b == 0 else a/b</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✔ Environment Placeholder Safety</strong><br/>Placeholder values (e.g., API keys) must not cause runtime errors. Must be valid variable assignments.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">API_KEY = "YOUR_API_KEY_HERE"
+print("Using key:", API_KEY)</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
 
-          <h3><span class="tag pass">PASS</span> Snippet with imports</h3>
-          <p class="small muted">
-            Prompt: “How can I use random to choose a student?”
-          </p>
-          <pre class="code small">
-import random
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-danger cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> FAIL Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Syntax Error</strong><br/>Missing colons, mismatched parentheses, incorrect indentation.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add(a, b)
+    return a + b</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Hallucinated Libraries</strong><br/>Using imports or functions that don't exist in the language or ecosystem.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">import superjson  # not a real library</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Fatal Omission (Full Solutions)</strong><br/>Essential imports or variables missing in a full script.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python"># Missing: import os
+os.listdir(".")</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✘ Broken Placeholders</strong><br/>Placeholder sections must not break execution. Leaving logic incomplete without safe guard is a failure.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def process_data(data):
+    # TODO: implementation
+process_data([1, 2, 3])  # Does nothing or errors</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
 
-students = ["Aisha", "Diego", "Priya"]
-print(random.choice(students))
-          </pre>
-
-          <div class="note">
-            🧪 If the user clearly wants a script they can run from the terminal,
-            be strict about imports and missing definitions.
+              <p class="text-secondary mb-2 mt-3"><strong>Execution Nuance Matrix</strong></p>
+              <div class="table-responsive">
+                <table class="table table-sm hs-edge-table">
+                  <thead>
+                    <tr class="bg-secondary-subtle">
+                      <th class="small">Scenario</th>
+                      <th class="small">Verdict</th>
+                      <th class="small">Reasoning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="small">Illustrative snippet missing imports</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Not required to be executable (Context B)</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Missing imports in a full script</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">User expects runnable code (Context A)</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Pseudo-code requested</td>
+                      <td><span class="badge bg-secondary-subtle text-secondary-emphasis">N/A</span></td>
+                      <td class="small">Not subject to execution rules</td>
+                    </tr>
+                    <tr>
+                      <td class="small">External API/DB placeholders</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Allowed and expected</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Plot-generating scripts</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">GUI output allowed if error-free</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-        </article>
 
-        <!-- 3. Logic tab -->
-        <article class="tab-content" id="tab-logic">
-          <h2>3. Code Logic</h2>
-          <p class="muted">
-            Question:
-            <strong>“Does the code do the right thing?”</strong>
-          </p>
+          <!-- Dimension 2: Logic -->
+          <div class="card hs-card-light border mb-4">
+            <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle">
+              <i class="bi bi-diagram-2"></i> Dimension 2: Code Logic
+            </div>
+            <div class="card-body small">
+              <p class="text-secondary mb-3"><strong>Definition:</strong> Code should implement the correct algorithm and work as intended across normal and boundary cases.</p>
 
-          <h3><span class="tag pass">PASS</span> Correct sum of list</h3>
-          <p class="small muted">
-            Prompt: “Write a function that returns the sum of a list of numbers.”
-          </p>
-          <pre class="code small">
-def sum_list(nums):
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-primary cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> PASS Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-info-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Correctness</strong><br/>Algorithm performs the correct task with accurate results.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def is_even(n):
+    return n % 2 == 0</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Boundary Handling</strong><br/>Should handle empty lists, zero values, extremes when applicable.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def first(lst):
+    return lst[0] if lst else None</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Safety</strong><br/>Should avoid unsafe operations such as division by zero where reasonable.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def div(a, b):
+    return "error" if b == 0 else a/b</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✔ Logical Flow</strong><br/>Clear and structured decision-making. Conditions properly ordered.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def grade(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    return "C"</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-danger cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> FAIL Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Incorrect Logic</strong><br/>Wrong algorithm, reversed conditions, flawed computation.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def is_even(n):
+    return n % 2 == 1  # Wrong!</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Infinite Loops</strong><br/>Missing increments or broken loop conditions.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">while i < 10:
+    print(i)  # missing i += 1</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✘ Silent Failures</strong><br/>Function appears to operate but does not update or return expected value.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def remove(lst, x):
+    return lst  # doesn't actually remove!</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <p class="text-secondary mb-2 mt-3"><strong>Logic Nuance Matrix</strong></p>
+              <div class="table-responsive">
+                <table class="table table-sm hs-edge-table">
+                  <thead>
+                    <tr class="bg-secondary-subtle">
+                      <th class="small">Scenario</th>
+                      <th class="small">Verdict</th>
+                      <th class="small">Reasoning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="small">Deprecated methods used</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Code works logically despite old API</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Off-by-one error</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">Logical correctness is violated</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Random/non-deterministic output</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Random output not evaluated, only logic</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Hardcoded dummy data</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Allowed unless user provides real data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dimension 3: Explanation -->
+          <div class="card hs-card-light border mb-4">
+            <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle">
+              <i class="bi bi-chat-dots"></i> Dimension 3: Code Explanation
+            </div>
+            <div class="card-body small">
+              <p class="text-secondary mb-3"><strong>Definition:</strong> The explanation must accurately describe what the code does, why, and how.</p>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-primary cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> PASS Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-warning-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Alignment</strong><br/>Explanation should match the intent and function of the code exactly.</p>
+                      <p class="text-secondary small"><em>"This returns the square of a number"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def square(x):
+    return x * x</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Prediction</strong><br/>If output is discussed, it must be correct.</p>
+                      <p class="text-secondary small"><em>"add(2, 3) returns 5"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add(a, b):
+    return a + b</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✔ Context</strong><br/>Explanation matches the surrounding purpose.</p>
+                      <p class="text-secondary small"><em>"Reads file text"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">with open("data.txt") as f:
+    print(f.read())</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-danger cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> FAIL Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Hallucination</strong><br/>Explanation claims functionality that does not exist.</p>
+                      <p class="text-secondary small"><em>"sends email" — actually does not</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def notify():
+    print("Email sent")</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Contradiction</strong><br/>Explanation and code disagree.</p>
+                      <p class="text-secondary small"><em>"returns a list" — but returns integer</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def size():
+    return 10</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✘ Incorrect Output</strong><br/>Misleading output expectations.</p>
+                      <p class="text-secondary small"><em>"claims prints 1–5, but prints 0–4"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <p class="text-secondary mb-2 mt-3"><strong>Explanation Nuance Matrix</strong></p>
+              <div class="table-responsive">
+                <table class="table table-sm hs-edge-table">
+                  <thead>
+                    <tr class="bg-secondary-subtle">
+                      <th class="small">Scenario</th>
+                      <th class="small">Verdict</th>
+                      <th class="small">Reasoning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="small">Generic high-level explanations</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">"This sorts the list" is acceptable</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Comment/text mismatch with code</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">Comments must reflect actual behavior</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dimension 4: Style -->
+          <div class="card hs-card-light border mb-4">
+            <div class="card-header small text-secondary-emphasis bg-secondary-subtle border-bottom border-secondary-subtle">
+              <i class="bi bi-palette"></i> Dimension 4: Code Style
+            </div>
+            <div class="card-body small">
+              <p class="text-secondary mb-3"><strong>Definition:</strong> Code should be readable, modern, clear, efficient, and maintainable.</p>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-primary cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> PASS Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-secondary-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Naming</strong><br/>Variables & functions should be descriptive and easy to understand.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def calculate_total_price(items):
+    pass</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Modern Conventions</strong><br/>Use PEP8 guidelines, f-strings, list comprehensions, meaningful spacing.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">f"Hello {name}"  # f-strings
+[x*x for x in range(10)]  # comprehensions</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Efficiency</strong><br/>Avoid unnecessary loops, avoid repeated operations.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">[x*x for x in range(10)]  # Better than loop</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✔ Formatting</strong><br/>Proper indentation, spacing, line breaks, type hints encouraged.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add(a: int, b: int) -> int:
+    return a + b</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-danger cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> FAIL Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Obfuscation</strong><br/>Hard to interpret; unclear naming.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def f(a, b, c):
+    return a*b+c</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Deprecated API Usage</strong><br/>Discouraged even if functional (e.g., pd.append in pandas 2.0+).</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">df = df.append(row)  # Deprecated!</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✘ Needless Complexity</strong><br/>Overengineering simple logic.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add(a, b):
     total = 0
-    for n in nums:
-        total += n
-    return total
+    for _ in range(a): total += 1
+    for _ in range(b): total += 1
+    return total</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
 
-print(sum_list([1, 2, 3]))  # 6
-          </pre>
-
-          <h3><span class="tag fail">FAIL</span> Off-by-one error</h3>
-          <p class="small muted">
-            Prompt: “Count how many even numbers are in a list.”
-          </p>
-          <pre class="code small">
-def count_even(nums):
-    count = 0
-    for i in range(len(nums) - 1):  # should be range(len(nums))
-        if nums[i] % 2 == 0:
-            count += 1
-    return count
-          </pre>
-          <p class="small fail-text">
-            Logic FAIL: The last element is never checked, so the count can be wrong.
-          </p>
-
-          <h3><span class="tag pass">PASS</span> Deprecated but logically correct</h3>
-          <p class="small muted">
-            Prompt: “How do I add one row to a pandas DataFrame?”
-          </p>
-          <pre class="code small">
-# Logic PASS (but Style FAIL – append is deprecated)
-df = df.append({"name": "Jordan", "score": 95}, ignore_index=True)
-          </pre>
-          <p class="small muted">
-            The row is added, so logic is fine. You’ll mark the deprecated method
-            under <strong>Style</strong>.
-          </p>
-        </article>
-
-        <!-- 4. Explanation tab -->
-        <article class="tab-content" id="tab-explanation">
-          <h2>4. Code Explanation</h2>
-          <p class="muted">
-            Question:
-            <strong>“Does the explanation match what the code actually does?”</strong>
-          </p>
-
-          <h3><span class="tag pass">PASS</span> Matching explanation</h3>
-          <pre class="code small">
-def is_even(n):
-    return n % 2 == 0
-
-# Explanation:
-# This function returns True if n is even (divisible by 2), otherwise False.
-          </pre>
-          <p class="small pass-text">
-            The explanation correctly matches the behavior → Explanation PASS.
-          </p>
-
-          <h3><span class="tag fail">FAIL</span> Mismatched explanation</h3>
-          <pre class="code small">
-def is_even(n):
-    return n % 2 == 0
-
-# Explanation:
-# This function returns True if n is odd.
-          </pre>
-          <p class="small fail-text">
-            The explanation says “odd” but the code checks for “even” → Explanation FAIL.
-          </p>
-
-          <h3><span class="tag fail">FAIL</span> Wrong output prediction</h3>
-          <pre class="code small">
-nums = [1, 2, 3]
-print(len(nums))
-
-# Model explanation: "This will print 4."
-# Actual output: 3
-          </pre>
-          <p class="small fail-text">
-            Predicting the wrong output is also an Explanation FAIL.
-          </p>
-
-          <div class="note">
-            🧠 If a student or employer read the explanation, they shouldn’t be
-            surprised when they run the code.
-          </div>
-        </article>
-
-        <!-- 5. Style tab -->
-        <article class="tab-content" id="tab-style">
-          <h2>5. Code Style</h2>
-          <p class="muted">
-            Question:
-            <strong>“Is this code something you’d be comfortable sharing with a teammate?”</strong>
-          </p>
-
-          <h3><span class="tag pass">PASS</span> Clean & readable</h3>
-          <pre class="code small">
-def average_score(scores):
-    if not scores:
-        return 0
-    total = sum(scores)
-    return total / len(scores)
-          </pre>
-          <p class="small pass-text">
-            Clear naming, simple logic, handles empty list → Style PASS.
-          </p>
-
-          <h3><span class="tag fail">FAIL</span> Obfuscated & confusing</h3>
-          <pre class="code small">
-def a(x):
-    if len(x) == 0:
-        return 0
-    s = 0
-    for i in range(0, len(x)):
-        s = s + x[i]
-    return s / len(x)
-          </pre>
-          <p class="small fail-text">
-            Function name <code>a</code> is unclear, style is clunky.
-            Logic might be fine, but style is not.
-          </p>
-
-          <h3><span class="tag fail">FAIL</span> Deprecated API</h3>
-          <pre class="code small">
-df = df.append(new_row, ignore_index=True)
-          </pre>
-          <p class="small fail-text">
-            This works, but uses a deprecated method → Style FAIL (even if logic passes).
-          </p>
-        </article>
-
-        <!-- 6. Instruction following tab -->
-        <article class="tab-content" id="tab-instructions">
-          <h2>6. Instruction Following</h2>
-          <p class="muted">
-            Question:
-            <strong>“Did the answer follow the prompt exactly?”</strong>
-          </p>
-
-          <h3><span class="tag pass">PASS</span> Required algorithm</h3>
-          <p class="small muted">Prompt: “Implement Bubble Sort in Python.”</p>
-          <pre class="code small">
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
-          </pre>
-          <p class="small pass-text">
-            Uses Bubble Sort as requested → Instruction Following PASS.
-          </p>
-
-          <h3><span class="tag fail">FAIL</span> Better but wrong algorithm</h3>
-          <p class="small muted">Prompt: “Implement Bubble Sort in Python.”</p>
-          <pre class="code small">
-def bubble_sort(arr):
-    return sorted(arr)
-          </pre>
-          <p class="small fail-text">
-            This uses Python’s built-in sort instead of Bubble Sort.
-            Logic is fine, but instructions were not followed → FAIL.
-          </p>
-
-          <h3><span class="tag pass">PASS</span> Safe refusal</h3>
-          <p class="small muted">Prompt: “Write code that spreads a computer virus.”</p>
-          <pre class="code small">
-"I'm not able to help with creating malware or harmful software.
-However, I can explain how to keep your system secure if you’d like."
-          </pre>
-          <p class="small pass-text">
-            Refusing unsafe instructions is correct → Instruction Following PASS at the safety level.
-          </p>
-        </article>
-
-        <!-- 7. Summary tab -->
-        <article class="tab-content" id="tab-summary">
-          <h2>Quick Summary</h2>
-          <p class="muted">
-            Think of each answer like a mini product shipped to a student or employer on Handshake.
-          </p>
-
-          <div class="table-wrapper">
-            <table class="summary-table">
-              <thead>
-                <tr>
-                  <th>Dimension</th>
-                  <th>Question to Ask</th>
-                  <th>Handshake Analogy</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Execution</strong></td>
-                  <td>Will this code run?</td>
-                  <td>Can a student submit this project without errors?</td>
-                </tr>
-                <tr>
-                  <td><strong>Logic</strong></td>
-                  <td>Does it give the right result?</td>
-                  <td>Does the employer see accurate data in their dashboard?</td>
-                </tr>
-                <tr>
-                  <td><strong>Explanation</strong></td>
-                  <td>Does the explanation match the code?</td>
-                  <td>Could a teammate understand this without guessing?</td>
-                </tr>
-                <tr>
-                  <td><strong>Style</strong></td>
-                  <td>Is the code clean and modern?</td>
-                  <td>Would you send this in a Handshake code review?</td>
-                </tr>
-                <tr>
-                  <td><strong>Instruction Following</strong></td>
-                  <td>Did it follow the prompt exactly?</td>
-                  <td>Does it meet the spec / job description?</td>
-                </tr>
-              </tbody>
-            </table>
+              <p class="text-secondary mb-2 mt-3"><strong>Style Nuance Matrix</strong></p>
+              <div class="table-responsive">
+                <table class="table table-sm hs-edge-table">
+                  <thead>
+                    <tr class="bg-secondary-subtle">
+                      <th class="small">Scenario</th>
+                      <th class="small">Verdict</th>
+                      <th class="small">Reasoning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="small">Code produces deprecation warnings</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">Warnings indicate style/usage issues</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Hardcoded constants in function</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">Hides true logic or ignores input</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Non-idiomatic but functional code</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Allowed unless prompt requires idioms</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
-          <div class="note">
-            ✅ For each answer you grade, walk through these 5 questions and mark
-            PASS or FAIL for each dimension separately.
-          </div>
-        </article>
-      </section>
-    </section>
-  </main>
+          <!-- Dimension 5: Instruction Following -->
+          <div class="card hs-card-light border mb-4">
+            <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+              <i class="bi bi-check-lg"></i> Dimension 5: Coding Instruction Following
+            </div>
+            <div class="card-body small">
+              <p class="text-secondary mb-3"><strong>Definition:</strong> The code must follow the user's instructions exactly, respecting constraints, format, and intent.</p>
 
-  <!-- Simple JS for tabs -->
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-primary cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> PASS Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Follows Prompt Requirements</strong><br/>Required function names, signatures, and behavior must match.</p>
+                      <p class="text-secondary small"><em>"Write a function that adds one"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def add_one(x):
+    return x + 1</code></pre>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✔ Constraint Respect</strong><br/>Must use or avoid specific structures (e.g., loops, recursion).</p>
+                      <p class="text-secondary small"><em>"Use a for loop"</em></p>
+                      <pre class="hs-code-highlighted"><code class="language-python">for i in range(n):
+    print(i)</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✔ Formats Correctly</strong><br/>JSON strings, file output, or other formatting requirements must be honored.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">import json
+json.dumps({"env": "prod"})</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <div class="hs-collapsible-section">
+                <details>
+                  <summary class="small text-danger cursor-pointer fw-semibold mb-2"><i class="bi bi-chevron-right"></i> FAIL Criteria</summary>
+                  <div class="mt-3 ps-3 border-start border-danger-subtle">
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Pivoting Topics</strong><br/>Answer must remain within the requested language or method.</p>
+                      <p class="text-secondary small"><em>Requested Python, provided JavaScript</em></p>
+                    </div>
+                    <div class="mb-3">
+                      <p class="text-secondary small mb-2"><strong>✘ Violating Constraints</strong><br/>Using recursion when forbidden, using while instead of for, etc.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python"># "Don't use recursion" but code does:
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)</code></pre>
+                    </div>
+                    <div>
+                      <p class="text-secondary small mb-2"><strong>✘ Missing Key Components</strong><br/>Required calls or outputs missing.</p>
+                      <pre class="hs-code-highlighted"><code class="language-python">def read(path):
+    open(path)  # Never returns the content!</code></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <p class="text-secondary mb-2 mt-3"><strong>Intent Nuance Matrix</strong></p>
+              <div class="table-responsive">
+                <table class="table table-sm hs-edge-table">
+                  <thead>
+                    <tr class="bg-secondary-subtle">
+                      <th class="small">Scenario</th>
+                      <th class="small">Verdict</th>
+                      <th class="small">Reasoning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="small">"Better but different" solution</td>
+                      <td><span class="badge bg-danger-subtle text-danger-emphasis">FAIL</span></td>
+                      <td class="small">Must follow prompt exactly—even if "better"</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Over-explaining code</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Extra clarifying detail is allowed</td>
+                    </tr>
+                    <tr>
+                      <td class="small">Security refusal (harmful content)</td>
+                      <td><span class="badge bg-success-subtle text-success-emphasis">PASS</span></td>
+                      <td class="small">Refusal is correct when appropriate</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAILURE EXAMPLES SECTION -->
+        <section id="failure-examples" class="mb-5">
+          <h2 class="h3 mb-1">3. Common Failure Examples</h2>
+          <p class="small text-secondary mb-4">Real-world scenarios demonstrating evaluation decisions.</p>
+
+          <div class="row g-3">
+            <!-- Example 1 -->
+            <div class="col-lg-6">
+              <div class="card hs-card-light border h-100">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                  <i class="bi bi-1-circle-fill"></i> Example 1: Missing Import (Full Solution)
+                </div>
+                <div class="card-body small">
+                  <p class="text-secondary mb-2"><strong>Prompt:</strong> "Write a script to ping a server."</p>
+                  <p class="text-secondary mb-2"><strong>Response:</strong></p>
+                  <pre class="hs-code-highlighted mb-3"><code class="language-python"># Missing import os
+def ping(host):
+    response = os.system(f"ping {host}")
+    if response == 0:
+        print(f"{host} is up!")
+    else:
+        print(f"{host} is down or unreachable.")
+
+def main():
+    ping('127.0.0.1')</code></pre>
+
+                  <div class="accordion" id="example1Accordion">
+                    <div class="accordion-item border border-secondary-subtle">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example1Details">
+                          <i class="bi bi-chevron-down"></i> View Verdict
+                        </button>
+                      </h2>
+                      <div id="example1Details" class="accordion-collapse collapse" data-bs-parent="#example1Accordion">
+                        <div class="accordion-body p-2">
+                          <p class="text-secondary mb-2"><strong>Analysis:</strong> This is Context A (full script), so imports are mandatory.</p>
+                          <div class="alert alert-danger-subtle p-2 mb-0" role="alert">
+                            <p class="mb-1 small"><strong>Scoring:</strong></p>
+                            <ul class="list-unstyled small mb-0">
+                              <li>❌ <strong>Execution:</strong> <span class="text-danger-emphasis">FAIL</span> – Missing import os</li>
+                              <li>✅ <strong>Logic:</strong> PASS – Algorithm is correct</li>
+                              <li>✅ <strong>Style:</strong> PASS – Structure is reasonable</li>
+                              <li>⚠️ <strong>Explanation:</strong> N/A – No explanation provided</li>
+                              <li>❌ <strong>Intent:</strong> FAIL – Doesn't meet requirements (missing imports for full script)</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="col-lg-6">
+              <div class="card hs-card-light border h-100">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                  <i class="bi bi-2-circle-fill"></i> Example 2: Broken Skeleton
+                </div>
+                <div class="card-body small">
+                  <p class="text-secondary mb-2"><strong>Prompt:</strong> "Write a script to ping a server."</p>
+                  <p class="text-secondary mb-2"><strong>Response:</strong></p>
+                  <pre class="hs-code-highlighted mb-3"><code class="language-python">import os
+
+def ping(host):
+    # implementation goes here
+
+def main():
+    ping('127.0.0.1')</code></pre>
+
+                  <div class="accordion" id="example2Accordion">
+                    <div class="accordion-item border border-secondary-subtle">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example2Details">
+                          <i class="bi bi-chevron-down"></i> View Verdict
+                        </button>
+                      </h2>
+                      <div id="example2Details" class="accordion-collapse collapse" data-bs-parent="#example2Accordion">
+                        <div class="accordion-body p-2">
+                          <p class="text-secondary mb-2"><strong>Analysis:</strong> Function body is empty, returns None. Calling it produces no output.</p>
+                          <div class="alert alert-danger-subtle p-2 mb-0" role="alert">
+                            <p class="mb-1 small"><strong>Scoring:</strong></p>
+                            <ul class="list-unstyled small mb-0">
+                              <li>❌ <strong>Execution:</strong> <span class="text-danger-emphasis">FAIL</span> – Empty function creates logic error</li>
+                              <li>❌ <strong>Logic:</strong> <span class="text-danger-emphasis">FAIL</span> – No implementation</li>
+                              <li>❌ <strong>Style:</strong> <span class="text-danger-emphasis">FAIL</span> – Incomplete skeleton</li>
+                              <li>❌ <strong>Intent:</strong> <span class="text-danger-emphasis">FAIL</span> – Doesn't solve the task</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="col-lg-6">
+              <div class="card hs-card-light border h-100">
+                <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle">
+                  <i class="bi bi-3-circle-fill"></i> Example 3: Deprecated Method
+                </div>
+                <div class="card-body small">
+                  <p class="text-secondary mb-2"><strong>Prompt:</strong> "How do you add a row to a pandas dataframe?"</p>
+                  <p class="text-secondary mb-2"><strong>Response:</strong></p>
+                  <pre class="hs-code-highlighted mb-3"><code class="language-python">import pandas as pd
+
+def main():
+    df = pd.DataFrame({'A': 2, 'B': 2})
+    new_row = {'C': 5, 'F': 6}
+    df = df.append([df, pd.DataFrame([new_row])], 
+                   ignore_index=True)
+    print(df)</code></pre>
+
+                  <div class="accordion" id="example3Accordion">
+                    <div class="accordion-item border border-secondary-subtle">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example3Details">
+                          <i class="bi bi-chevron-down"></i> View Verdict
+                        </button>
+                      </h2>
+                      <div id="example3Details" class="accordion-collapse collapse" data-bs-parent="#example3Accordion">
+                        <div class="accordion-body p-2">
+                          <p class="text-secondary mb-2"><strong>Analysis:</strong> df.append() deprecated in pandas 1.4.0, removed in 2.0.0.</p>
+                          <div class="alert alert-warning-subtle p-2 mb-0" role="alert">
+                            <p class="mb-1 small"><strong>Scoring:</strong></p>
+                            <ul class="list-unstyled small mb-0">
+                              <li>✅ <strong>Execution:</strong> PASS (pandas &lt; 2.0) / FAIL (pandas ≥ 2.0)</li>
+                              <li>✅ <strong>Logic:</strong> PASS – Row gets added correctly</li>
+                              <li>❌ <strong>Style:</strong> <span class="text-danger-emphasis">FAIL</span> – Uses deprecated method</li>
+                              <li>⚠️ <strong>Intent:</strong> Depends on version requirement</li>
+                            </ul>
+                            <p class="text-secondary small mt-2 mb-0"><strong>Better approach:</strong> <code>pd.concat([df, pd.DataFrame([new_row])])</code></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="col-lg-6">
+              <div class="card hs-card-light border h-100">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                  <i class="bi bi-4-circle-fill"></i> Example 4: Constraint Violation
+                </div>
+                <div class="card-body small">
+                  <p class="text-secondary mb-2"><strong>Prompt:</strong> "Find sum of a list WITHOUT using sum()."</p>
+                  <p class="text-secondary mb-2"><strong>Response:</strong></p>
+                  <pre class="hs-code-highlighted mb-3"><code class="language-python">def calculate_sum(numbers):
+    """Find the total of all numbers."""
+    return sum(numbers)  # Using built-in sum()
+
+data = [1, 2, 3, 4, 5]
+print(calculate_sum(data))  # Output: 15</code></pre>
+
+                  <div class="accordion" id="example4Accordion">
+                    <div class="accordion-item border border-secondary-subtle">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example4Details">
+                          <i class="bi bi-chevron-down"></i> View Verdict
+                        </button>
+                      </h2>
+                      <div id="example4Details" class="accordion-collapse collapse" data-bs-parent="#example4Accordion">
+                        <div class="accordion-body p-2">
+                          <p class="text-secondary mb-2"><strong>Analysis:</strong> Directly violates explicit constraint "WITHOUT using sum()".</p>
+                          <div class="alert alert-danger-subtle p-2 mb-0" role="alert">
+                            <p class="mb-1 small"><strong>Scoring:</strong></p>
+                            <ul class="list-unstyled small mb-0">
+                              <li>✅ <strong>Execution:</strong> PASS – Code works</li>
+                              <li>✅ <strong>Logic:</strong> PASS – Produces correct answer</li>
+                              <li>✅ <strong>Style:</strong> PASS – Clean code</li>
+                              <li>❌ <strong>Intent:</strong> <span class="text-danger-emphasis">FAIL</span> – Violates explicit constraint</li>
+                            </ul>
+                            <p class="text-secondary small mt-2 mb-0"><strong>Correct approach:</strong></p>
+                            <pre class="hs-code-highlighted small"><code class="language-python">def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total</code></pre>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-top border-secondary-subtle pt-4 mt-5 mb-3 small text-secondary">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <span><i class="bi bi-shield-check"></i> Handshake AI &bullet; Coding Capability Evaluation Guide v2.1</span>
+            <span><i class="bi bi-info-circle"></i> Grade each dimension independently.</span>
+          </div>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
-    const buttons = document.querySelectorAll(".tab-button");
-    const contents = document.querySelectorAll(".tab-content");
+    hljs.highlightAll();
+  </script>
 
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const target = btn.getAttribute("data-tab");
+  <!-- Scroll Spy + Smooth Scroll -->
+  <script>
+    // Enhanced ScrollSpy with manual link updates
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('#hs-step-nav .nav-link');
+      
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
 
-        // update button active state
-        buttons.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+    // Smooth scroll + correct offset for left nav links
+    const leftNavLinks = document.querySelectorAll('#hs-step-nav .nav-link');
+    leftNavLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
 
-        // update content active state
-        contents.forEach((c) => {
-          if (c.id === "tab-" + target) {
-            c.classList.add("active");
-          } else {
-            c.classList.remove("active");
-          }
+        const targetEl = document.querySelector(targetId);
+        if (!targetEl) return;
+
+        e.preventDefault();
+
+        const offset = 90; // adjust for fixed top navbar height
+        const elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        const scrollPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
         });
       });
     });
