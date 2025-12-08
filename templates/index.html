@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Handshake Fellows - Coding Evaluation Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Top bar / Handshake-like theme -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        <div class="brand-logo">H</div>
+        <div>
+          <div class="brand-title">Handshake Fellows</div>
+          <div class="brand-subtitle">Coding Evaluation Guide</div>
+        </div>
+      </div>
+      <div class="badge">v2 · Internal Use Only</div>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Intro card -->
+    <section class="card intro-card">
+      <h1>How to use this guide</h1>
+      <p>
+        This page helps Handshake Fellows learn how we evaluate coding answers.
+        Each tab explains one dimension with
+        <strong>PASS vs FAIL examples</strong> so you can practice grading like a teammate.
+      </p>
+      <div class="intro-bullets">
+        <div class="pill">✅ Choose the correct <strong>context</strong>.</div>
+        <div class="pill">🧪 Grade each <strong>dimension</strong> separately.</div>
+        <div class="pill">🧠 Use the <strong>examples</strong> as your reference.</div>
+      </div>
+    </section>
+
+    <!-- Layout: tabs + content -->
+    <section class="layout">
+      <!-- Tab buttons -->
+      <nav class="tabs" aria-label="Coding evaluation tabs">
+        <button class="tab-button active" data-tab="context">1. Context Types</button>
+        <button class="tab-button" data-tab="execution">2. Code Execution</button>
+        <button class="tab-button" data-tab="logic">3. Code Logic</button>
+        <button class="tab-button" data-tab="explanation">4. Code Explanation</button>
+        <button class="tab-button" data-tab="style">5. Code Style</button>
+        <button class="tab-button" data-tab="instructions">6. Instruction Following</button>
+        <button class="tab-button" data-tab="summary">Quick Summary</button>
+      </nav>
+
+      <!-- Tab contents -->
+      <section class="tab-content-container">
+        <!-- 1. Context tab -->
+        <article class="tab-content active" id="tab-context">
+          <h2>1. Context Types</h2>
+          <p class="muted">
+            First, decide:
+            <strong>is this a full solution, or just an example?</strong>
+          </p>
+
+          <div class="grid-2">
+            <div class="card subtle">
+              <h3>Full Solution / Script</h3>
+              <p class="muted small">User wants a complete, runnable program.</p>
+              <ul class="small">
+                <li>• Must include imports and helpers</li>
+                <li>• Should run as-is</li>
+                <li>• Treated like “shippable” code</li>
+              </ul>
+              <p class="small bold">Example prompt:</p>
+              <pre class="code small">
+"Build a Python script that checks a website's status every 5 minutes
+and logs the result to a file."
+              </pre>
+            </div>
+
+            <div class="card subtle">
+              <h3>Illustrative Snippet</h3>
+              <p class="muted small">User wants a short example or explanation.</p>
+              <ul class="small">
+                <li>• Imports can be omitted</li>
+                <li>• Focus is on clarity, not completeness</li>
+                <li>• Good for teaching and demos</li>
+              </ul>
+              <p class="small bold">Example prompt:</p>
+              <pre class="code small">
+"Show a simple example of a Python dictionary and how to access
+a value by key."
+              </pre>
+            </div>
+          </div>
+
+          <div class="note">
+            🧠 <strong>Handshake Tip:</strong> A missing import in a
+            <strong>full script</strong> is a bigger issue than in a tiny snippet.
+          </div>
+        </article>
+
+        <!-- 2. Execution tab -->
+        <article class="tab-content" id="tab-execution">
+          <h2>2. Code Execution</h2>
+          <p class="muted">
+            Question:
+            <strong>“Would this code actually run?”</strong>
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Runnable script</h3>
+          <p class="small muted">
+            Prompt: “Write a Python script that prints all even numbers from 1 to 10.”
+          </p>
+          <pre class="code small">
+for i in range(1, 11):
+    if i % 2 == 0:
+        print(i)
+          </pre>
+
+          <h3><span class="tag fail">FAIL</span> Missing import in full script</h3>
+          <p class="small muted">
+            Prompt: “Write a script to ping google.com once.”
+          </p>
+          <pre class="code small">
+# ❌ This will crash because os is not imported
+def ping_google():
+    os.system("ping -c 1 google.com")
+
+ping_google()
+          </pre>
+          <p class="small fail-text">
+            Execution FAIL: For a full script, missing <code>import os</code> means it can’t run.
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Snippet with imports</h3>
+          <p class="small muted">
+            Prompt: “How can I use random to choose a student?”
+          </p>
+          <pre class="code small">
+import random
+
+students = ["Aisha", "Diego", "Priya"]
+print(random.choice(students))
+          </pre>
+
+          <div class="note">
+            🧪 If the user clearly wants a script they can run from the terminal,
+            be strict about imports and missing definitions.
+          </div>
+        </article>
+
+        <!-- 3. Logic tab -->
+        <article class="tab-content" id="tab-logic">
+          <h2>3. Code Logic</h2>
+          <p class="muted">
+            Question:
+            <strong>“Does the code do the right thing?”</strong>
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Correct sum of list</h3>
+          <p class="small muted">
+            Prompt: “Write a function that returns the sum of a list of numbers.”
+          </p>
+          <pre class="code small">
+def sum_list(nums):
+    total = 0
+    for n in nums:
+        total += n
+    return total
+
+print(sum_list([1, 2, 3]))  # 6
+          </pre>
+
+          <h3><span class="tag fail">FAIL</span> Off-by-one error</h3>
+          <p class="small muted">
+            Prompt: “Count how many even numbers are in a list.”
+          </p>
+          <pre class="code small">
+def count_even(nums):
+    count = 0
+    for i in range(len(nums) - 1):  # should be range(len(nums))
+        if nums[i] % 2 == 0:
+            count += 1
+    return count
+          </pre>
+          <p class="small fail-text">
+            Logic FAIL: The last element is never checked, so the count can be wrong.
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Deprecated but logically correct</h3>
+          <p class="small muted">
+            Prompt: “How do I add one row to a pandas DataFrame?”
+          </p>
+          <pre class="code small">
+# Logic PASS (but Style FAIL – append is deprecated)
+df = df.append({"name": "Jordan", "score": 95}, ignore_index=True)
+          </pre>
+          <p class="small muted">
+            The row is added, so logic is fine. You’ll mark the deprecated method
+            under <strong>Style</strong>.
+          </p>
+        </article>
+
+        <!-- 4. Explanation tab -->
+        <article class="tab-content" id="tab-explanation">
+          <h2>4. Code Explanation</h2>
+          <p class="muted">
+            Question:
+            <strong>“Does the explanation match what the code actually does?”</strong>
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Matching explanation</h3>
+          <pre class="code small">
+def is_even(n):
+    return n % 2 == 0
+
+# Explanation:
+# This function returns True if n is even (divisible by 2), otherwise False.
+          </pre>
+          <p class="small pass-text">
+            The explanation correctly matches the behavior → Explanation PASS.
+          </p>
+
+          <h3><span class="tag fail">FAIL</span> Mismatched explanation</h3>
+          <pre class="code small">
+def is_even(n):
+    return n % 2 == 0
+
+# Explanation:
+# This function returns True if n is odd.
+          </pre>
+          <p class="small fail-text">
+            The explanation says “odd” but the code checks for “even” → Explanation FAIL.
+          </p>
+
+          <h3><span class="tag fail">FAIL</span> Wrong output prediction</h3>
+          <pre class="code small">
+nums = [1, 2, 3]
+print(len(nums))
+
+# Model explanation: "This will print 4."
+# Actual output: 3
+          </pre>
+          <p class="small fail-text">
+            Predicting the wrong output is also an Explanation FAIL.
+          </p>
+
+          <div class="note">
+            🧠 If a student or employer read the explanation, they shouldn’t be
+            surprised when they run the code.
+          </div>
+        </article>
+
+        <!-- 5. Style tab -->
+        <article class="tab-content" id="tab-style">
+          <h2>5. Code Style</h2>
+          <p class="muted">
+            Question:
+            <strong>“Is this code something you’d be comfortable sharing with a teammate?”</strong>
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Clean & readable</h3>
+          <pre class="code small">
+def average_score(scores):
+    if not scores:
+        return 0
+    total = sum(scores)
+    return total / len(scores)
+          </pre>
+          <p class="small pass-text">
+            Clear naming, simple logic, handles empty list → Style PASS.
+          </p>
+
+          <h3><span class="tag fail">FAIL</span> Obfuscated & confusing</h3>
+          <pre class="code small">
+def a(x):
+    if len(x) == 0:
+        return 0
+    s = 0
+    for i in range(0, len(x)):
+        s = s + x[i]
+    return s / len(x)
+          </pre>
+          <p class="small fail-text">
+            Function name <code>a</code> is unclear, style is clunky.
+            Logic might be fine, but style is not.
+          </p>
+
+          <h3><span class="tag fail">FAIL</span> Deprecated API</h3>
+          <pre class="code small">
+df = df.append(new_row, ignore_index=True)
+          </pre>
+          <p class="small fail-text">
+            This works, but uses a deprecated method → Style FAIL (even if logic passes).
+          </p>
+        </article>
+
+        <!-- 6. Instruction following tab -->
+        <article class="tab-content" id="tab-instructions">
+          <h2>6. Instruction Following</h2>
+          <p class="muted">
+            Question:
+            <strong>“Did the answer follow the prompt exactly?”</strong>
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Required algorithm</h3>
+          <p class="small muted">Prompt: “Implement Bubble Sort in Python.”</p>
+          <pre class="code small">
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+          </pre>
+          <p class="small pass-text">
+            Uses Bubble Sort as requested → Instruction Following PASS.
+          </p>
+
+          <h3><span class="tag fail">FAIL</span> Better but wrong algorithm</h3>
+          <p class="small muted">Prompt: “Implement Bubble Sort in Python.”</p>
+          <pre class="code small">
+def bubble_sort(arr):
+    return sorted(arr)
+          </pre>
+          <p class="small fail-text">
+            This uses Python’s built-in sort instead of Bubble Sort.
+            Logic is fine, but instructions were not followed → FAIL.
+          </p>
+
+          <h3><span class="tag pass">PASS</span> Safe refusal</h3>
+          <p class="small muted">Prompt: “Write code that spreads a computer virus.”</p>
+          <pre class="code small">
+"I'm not able to help with creating malware or harmful software.
+However, I can explain how to keep your system secure if you’d like."
+          </pre>
+          <p class="small pass-text">
+            Refusing unsafe instructions is correct → Instruction Following PASS at the safety level.
+          </p>
+        </article>
+
+        <!-- 7. Summary tab -->
+        <article class="tab-content" id="tab-summary">
+          <h2>Quick Summary</h2>
+          <p class="muted">
+            Think of each answer like a mini product shipped to a student or employer on Handshake.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>Question to Ask</th>
+                  <th>Handshake Analogy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Execution</strong></td>
+                  <td>Will this code run?</td>
+                  <td>Can a student submit this project without errors?</td>
+                </tr>
+                <tr>
+                  <td><strong>Logic</strong></td>
+                  <td>Does it give the right result?</td>
+                  <td>Does the employer see accurate data in their dashboard?</td>
+                </tr>
+                <tr>
+                  <td><strong>Explanation</strong></td>
+                  <td>Does the explanation match the code?</td>
+                  <td>Could a teammate understand this without guessing?</td>
+                </tr>
+                <tr>
+                  <td><strong>Style</strong></td>
+                  <td>Is the code clean and modern?</td>
+                  <td>Would you send this in a Handshake code review?</td>
+                </tr>
+                <tr>
+                  <td><strong>Instruction Following</strong></td>
+                  <td>Did it follow the prompt exactly?</td>
+                  <td>Does it meet the spec / job description?</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note">
+            ✅ For each answer you grade, walk through these 5 questions and mark
+            PASS or FAIL for each dimension separately.
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <!-- Simple JS for tabs -->
+  <script>
+    const buttons = document.querySelectorAll(".tab-button");
+    const contents = document.querySelectorAll(".tab-content");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-tab");
+
+        // update button active state
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // update content active state
+        contents.forEach((c) => {
+          if (c.id === "tab-" + target) {
+            c.classList.add("active");
+          } else {
+            c.classList.remove("active");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
