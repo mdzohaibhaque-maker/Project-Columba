@@ -80,6 +80,9 @@
             <a class="nav-link" href="#code-difficulty">Code Difficulty</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#code-taxonomy">Code Taxonomy</a>
+          </li>
+          <li class="nav-item">
             <span class="badge rounded-pill hs-pill ms-lg-2">Annotator v2.1</span>
           </li>
         </ul>
@@ -106,6 +109,7 @@
               <a href="#dimensions" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">3</span> Dimensions</a>
               <a href="#failure-examples" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">4</span> Failure Examples</a>
               <a href="#code-difficulty" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">5</span> Code Difficulty</a>
+              <a href="#code-taxonomy" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">6</span> Code Taxonomy</a>
             </nav>
           </div>
         </div>
@@ -981,6 +985,72 @@ print(calculate_sum(data))  # Output: 15</code></pre>
                       <li>• Implement a REST API that does account management for my website. The necessary functionality includes creating a user, fetching user information (username, full name, email address), updating a user's full name or email address, updating a user's password, and deleting a user. The functionality to fetch, update, or delete should be protected by an authentication scheme that verifies the user's password. Store all information in a sqlite table.</li>
                     </ul>
                   </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CODE TAXONOMY SECTION -->
+        <section id="code-taxonomy" class="mb-5">
+          <h2 class="h3 mb-1">6. Code Taxonomy</h2>
+          <p class="small text-secondary mb-4">A comprehensive taxonomy of code-related tasks organized by level of abstraction and task type.</p>
+
+          <div class="table-responsive">
+            <table class="table table-sm hs-difficulty-table">
+              <thead>
+                <tr>
+                  <th class="small text-center align-middle">L1</th>
+                  <th class="small text-center align-middle">L2</th>
+                  <th class="small text-center align-middle">Example L3s (not exhaustive)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Code Generation / Synthesis -->
+                <tr>
+                  <td rowspan="6" class="small fw-semibold align-middle text-center">Code Generation / Synthesis</td>
+                  <td class="small fw-semibold text-center align-middle">Code Completion</td>
+                  <td class="small text-center align-middle">Auto-Completion<br/>Code Infilling<br/>Text-to-Code<br/><br/>Text-to-SQL</td>
+                </tr>
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Editing / Rewriting</td>
+                  <td class="small text-center align-middle">Code Summarization/Compression<br/>Code System Summarization<br/>Identifier Prediction<br/>Text to Code Edits<br/>Precise Edit Description to Code Changes<br/>High-Level Edit Description to Edits</td>
+                </tr>
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Translation</td>
+                  <td class="small text-center align-middle">Code Conversion<br/>Code Migration<br/>Code Translation</td>
+                </tr>
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Refactoring</td>
+                  <td class="small text-center align-middle">Code Optimization<br/>Code Refactoring<br/>Code Rewriting</td>
+                </tr>
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Documentation</td>
+                  <td class="small text-center align-middle">Codebase Documentation<br/>Codebase architecture documentation<br/>Codebase overview generation<br/>Comment Generation<br/><br/>API Documentation<br/>API Endpoint Documentation<br/>API Parameter Documentation<br/>API Response Documentation<br/>Create Example Usages of this Function</td>
+                </tr>
+
+                <!-- Code Debugging -->
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Debugging</td>
+                  <td class="small text-center align-middle">Debugging and troubleshooting<br/>Debugging from a Stack Trace<br/>Code Repair (with Test Feedback, Execution Traces)<br/>Deobfuscation<br/>Issue Replication</td>
+                </tr>
+
+                <!-- Testing -->
+                <tr>
+                  <td rowspan="2" class="small fw-semibold align-middle text-center">Testing</td>
+                  <td class="small fw-semibold text-center align-middle">Test Generation</td>
+                  <td class="small text-center align-middle">Differential Test Generation (given the change)<br/>Assertion Generation<br/>Cloze Test<br/>Unit Test Generation</td>
+                </tr>
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Security Review</td>
+                  <td class="small text-center align-middle">Malicious Code Detection<br/>Secure Coding<br/>Test Case Generation<br/>Vulnerable Code Detection<br/>Log Analysis</td>
+                </tr>
+
+                <!-- Code Review + Best Practices -->
+                <tr>
+                  <td class="small fw-semibold text-center align-middle">Code Review + Best Practices</td>
+                  <td class="small fw-semibold text-center align-middle">Code Review</td>
+                  <td class="small text-center align-middle">Code Refinement<br/>Review Comment Generation<br/>Review Decision Prediction<br/>Review Necessity Prediction<br/>Quality Assurance<br/><br/>Commit Text Generation</td>
                 </tr>
               </tbody>
             </table>
