@@ -38,10 +38,11 @@
     .hs-edge-table thead th { font-weight: 600; font-size: 0.8125rem; }
     .cursor-pointer { cursor: pointer; }
     .hs-difficulty-table { background-color: #ffffff; border: 1px solid #d3d3d3; }
-    .hs-difficulty-table thead th { background-color: #ffffff; color: #444444; border: 1px solid #d3d3d3; font-weight: 600; }
+    .hs-difficulty-table thead th { background-color: #f0f0f0; color: #444444; border: 1px solid #d3d3d3; font-weight: 600; }
     .hs-difficulty-table tbody td { background-color: #ffffff; color: #606060; border: 1px solid #d3d3d3; }
     .hs-difficulty-table tbody tr:nth-child(odd) { background-color: #ffffff; }
     .hs-difficulty-table tbody tr:hover { background-color: #f9f9f9; }
+    .hs-difficulty-level { background-color: #f0f0f0; }
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#hs-step-nav" data-bs-offset="100" tabindex="0">
@@ -926,7 +927,7 @@ print(calculate_sum(data))  # Output: 15</code></pre>
               <tbody>
                 <!-- Easy Row -->
                 <tr>
-                  <td class="small fw-semibold">Easy</td>
+                  <td class="small fw-semibold hs-difficulty-level">Easy</td>
                   <td class="small">
                     <p class="mb-2"><strong>A prompt is easy if:</strong></p>
                     <ul class="list-unstyled ps-3 mb-0">
@@ -947,7 +948,7 @@ print(calculate_sum(data))  # Output: 15</code></pre>
 
                 <!-- Medium Row -->
                 <tr>
-                  <td class="small fw-semibold">Medium</td>
+                  <td class="small fw-semibold hs-difficulty-level">Medium</td>
                   <td class="small">
                     <p class="mb-2"><strong>A prompt is medium if:</strong></p>
                     <ul class="list-unstyled ps-3 mb-0">
@@ -968,7 +969,7 @@ print(calculate_sum(data))  # Output: 15</code></pre>
 
                 <!-- Hard Row -->
                 <tr>
-                  <td class="small fw-semibold">Hard</td>
+                  <td class="small fw-semibold hs-difficulty-level">Hard</td>
                   <td class="small">
                     <p class="mb-2"><strong>A prompt is hard if:</strong></p>
                     <ul class="list-unstyled ps-3 mb-0">
