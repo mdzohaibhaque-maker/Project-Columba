@@ -37,6 +37,11 @@
     .hs-edge-table { margin-bottom: 0; }
     .hs-edge-table thead th { font-weight: 600; font-size: 0.8125rem; }
     .cursor-pointer { cursor: pointer; }
+    .hs-difficulty-table { background-color: #ffffff; border: 1px solid #d3d3d3; }
+    .hs-difficulty-table thead th { background-color: #ffffff; color: #444444; border: 1px solid #d3d3d3; font-weight: 600; }
+    .hs-difficulty-table tbody td { background-color: #ffffff; color: #606060; border: 1px solid #d3d3d3; }
+    .hs-difficulty-table tbody tr:nth-child(odd) { background-color: #ffffff; }
+    .hs-difficulty-table tbody tr:hover { background-color: #f9f9f9; }
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#hs-step-nav" data-bs-offset="100" tabindex="0">
@@ -72,6 +77,9 @@
             <a class="nav-link" href="#failure-examples">Failure Examples</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#code-difficulty">Code Difficulty</a>
+          </li>
+          <li class="nav-item">
             <span class="badge rounded-pill hs-pill ms-lg-2">Annotator v2.1</span>
           </li>
         </ul>
@@ -97,6 +105,7 @@
               <a href="#workflow" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">2</span> Workflow</a>
               <a href="#dimensions" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">3</span> Dimensions</a>
               <a href="#failure-examples" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">4</span> Failure Examples</a>
+              <a href="#code-difficulty" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">5</span> Code Difficulty</a>
             </nav>
           </div>
         </div>
@@ -893,6 +902,88 @@ print(calculate_sum(data))  # Output: 15</code></pre>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <!-- CODE DIFFICULTY SECTION -->
+        <section id="code-difficulty" class="mb-5">
+          <h2 class="h3 mb-1">5. Code Difficulty</h2>
+          <p class="small text-secondary mb-4">Categorize coding prompts into difficulty levels based on required knowledge, complexity, and expected correctness rates.</p>
+
+          <div class="table-responsive">
+            <table class="table table-sm hs-difficulty-table">
+              <thead>
+                <tr>
+                  <th class="small text-center align-middle">Difficulty Level</th>
+                  <th class="small text-center align-middle">Definition</th>
+                  <th class="small text-center align-middle">Examples</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Easy Row -->
+                <tr>
+                  <td class="small fw-semibold">Easy</td>
+                  <td class="small">
+                    <p class="mb-2"><strong>A prompt is easy if:</strong></p>
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• It requires basic knowledge of data structures of algorithms and limited domain knowledge or implementation context (architecture, libraries, pre-existing code)</li>
+                      <li>• There is little ambiguity in the prompt (in case of underspecification, good default behaviors are easy to come up with or not important) and limited complexity of specifications (in terms of number of instructions)</li>
+                      <li>• The solution is easy to explain and to debug, with a limited number of corner cases.</li>
+                      <li><strong>Expected correctness:</strong> Llama 3.2 3B should get about 30% of easy prompts completely correct.</li>
+                    </ul>
+                  </td>
+                  <td class="small">
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• Implement the factorial function in Python.</li>
+                      <li>• How can I rotate the x axis legend in matplotlib to write it vertically?</li>
+                      <li>• In Bash, how do I list all text files in the current directory (excluding subdirectories) that have been modified in the last month?</li>
+                    </ul>
+                  </td>
+                </tr>
+
+                <!-- Medium Row -->
+                <tr>
+                  <td class="small fw-semibold">Medium</td>
+                  <td class="small">
+                    <p class="mb-2"><strong>A prompt is medium if:</strong></p>
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• It requires mature knowledge of algorithms and data structures to get an optimal solution, or alternatively, knowledge of common libraries and concepts. May require additional code context.</li>
+                      <li>• There is medium ambiguity in the prompt (e.g. needs to come up with reasonable ad-hoc data representation or class structure without explicit guidance). Multiple requirements should be satisfied or, in debugging problems, multiple bugs should be found.</li>
+                      <li>• The problem involves corner cases that should be dealt with separately. Alternatively, the explanation of the solution requires some abstraction or decomposition of the problem into a few subproblems.</li>
+                      <li><strong>Expected correctness:</strong> Llama 3.1 70B should get about 30% of medium prompts completely correct.</li>
+                    </ul>
+                  </td>
+                  <td class="small">
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• This function should return a list of lambda functions that compute successive powers of their input, but it doesn't work:<br/><code class="language-python">def power_funcs(max_pow):<br/>    return [lambda x:x**k for k in range(1,  max_pow+1)]</code><br/>The function should be such that [h(2) for f in powers(3)] should give [2, 4, 8], but it currently gives [8,8,8]. What is happening here?</li>
+                      <li>• Compute the longest increasing subsequence in a list. Implement the solution in C++.</li>
+                      <li>• How can I use the Instagram Python API to create a post automatically?</li>
+                    </ul>
+                  </td>
+                </tr>
+
+                <!-- Hard Row -->
+                <tr>
+                  <td class="small fw-semibold">Hard</td>
+                  <td class="small">
+                    <p class="mb-2"><strong>A prompt is hard if:</strong></p>
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• It requires expert domain knowledge or information on the specific application or deployment scenario, including substantial specific API/code context,</li>
+                      <li>• Finding good solutions involves non-trivial design decisions regarding data structures, algorithms or code architecture/design patterns. Finding a solution could also require solving several non-trivial subproblems or, in the debugging case, finding non-trivial bugs.</li>
+                      <li>• The problem may involve tricky corner cases and explaining the solution to a non-expert requires adding context.</li>
+                      <li><strong>Expected correctness:</strong> Llama 3.1 405B should get about 10% of hard prompts completely correct.</li>
+                    </ul>
+                  </td>
+                  <td class="small">
+                    <ul class="list-unstyled ps-3 mb-0">
+                      <li>• What would be AdagradW, the equivalent of AdamW for Adagrad? Implement AdagradW in Python.</li>
+                      <li>• Make a pong game in Rust.</li>
+                      <li>• Implement a REST API that does account management for my website. The necessary functionality includes creating a user, fetching user information (username, full name, email address), updating a user's full name or email address, updating a user's password, and deleting a user. The functionality to fetch, update, or delete should be protected by an authentication scheme that verifies the user's password. Store all information in a sqlite table.</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
