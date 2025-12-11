@@ -43,6 +43,8 @@
     .hs-difficulty-table tbody tr:nth-child(odd) { background-color: #ffffff; }
     .hs-difficulty-table tbody tr:hover { background-color: #f9f9f9; }
     .hs-difficulty-level { background-color: #f0f0f0; }
+    .hs-dark-header { color: #273e31 !important; }
+    .hs-edge-table thead th { color: #273e31 !important; }
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#hs-step-nav" data-bs-offset="100" tabindex="0">
@@ -170,7 +172,7 @@
               <!-- Context A -->
               <div class="col-lg-6">
                 <div class="card hs-card-light h-100 border">
-                  <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle">
+                  <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle hs-dark-header">
                     <i class="bi bi-box-seam"></i> Context A: Full Solution / Script
                   </div>
                   <div class="card-body small">
@@ -205,7 +207,7 @@ if __name__ == "__main__":
               <!-- Context B -->
               <div class="col-lg-6">
                 <div class="card hs-card-light h-100 border">
-                  <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle">
+                  <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle hs-dark-header">
                     <i class="bi bi-code"></i> Context B: Illustrative Snippet / Concept
                   </div>
                   <div class="card-body small">
@@ -230,21 +232,19 @@ print(numbers)  # [1, 2, 3]</code></pre>
               </div>
             </div>
           </div>
-
-          <div class="alert alert-primary-subtle border-primary-subtle p-3" role="alert">
-            <p class="mb-2"><strong><i class="bi bi-lightbulb"></i> Key Point:</strong></p>
-            <p class="mb-0">Each of the 5 dimensions below is graded <strong>independently</strong>. A response does <strong>NOT</strong> need to PASS all dimensions to receive credit—evaluate each separately based on its own criteria.</p>
-          </div>
         </section>
 
         <!-- DIMENSIONS SECTION -->
         <section id="dimensions" class="mb-5">
           <h2 class="h3 mb-1">2. Dimension Rubrics & Edge Cases</h2>
           <p class="small text-secondary mb-4">Five independent evaluation dimensions with comprehensive specifications.</p>
-
+          <div class="alert alert-primary-subtle border-primary-subtle p-3" role="alert">
+            <p class="mb-2"><strong><i class="bi bi-lightbulb"></i> Key Point:</strong></p>
+            <p class="mb-0">Each of the 5 dimensions below is graded <strong>independently</strong>. A response does <strong>NOT</strong> need to PASS all dimensions to receive credit—evaluate each separately based on its own criteria.</p>
+          </div>
           <!-- Dimension 1: Execution -->
           <div class="card hs-card-light border mb-4">
-            <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle">
+            <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-play-circle"></i> Dimension 1: Code Execution
             </div>
             <div class="card-body small">
@@ -353,7 +353,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
 
           <!-- Dimension 2: Logic -->
           <div class="card hs-card-light border mb-4">
-            <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle">
+            <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-diagram-2"></i> Dimension 2: Code Logic
             </div>
             <div class="card-body small">
@@ -453,7 +453,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
 
           <!-- Dimension 3: Explanation -->
           <div class="card hs-card-light border mb-4">
-            <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle">
+            <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-chat-dots"></i> Dimension 3: Code Explanation
             </div>
             <div class="card-body small">
@@ -540,7 +540,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
 
           <!-- Dimension 4: Style -->
           <div class="card hs-card-light border mb-4">
-            <div class="card-header small text-secondary-emphasis bg-secondary-subtle border-bottom border-secondary-subtle">
+            <div class="card-header small text-secondary-emphasis bg-secondary-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-palette"></i> Dimension 4: Code Style
             </div>
             <div class="card-body small">
@@ -632,7 +632,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
 
           <!-- Dimension 5: Instruction Following -->
           <div class="card hs-card-light border mb-4">
-            <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+            <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-check-lg"></i> Dimension 5: Coding Instruction Following
             </div>
             <div class="card-body small">
@@ -728,7 +728,7 @@ def factorial(n):
             <!-- Example 1 -->
             <div class="col-lg-6">
               <div class="card hs-card-light border h-100">
-                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle hs-dark-header">
                   <i class="bi bi-1-circle-fill"></i> Example 1: Missing Import (Full Solution)
                 </div>
                 <div class="card-body small">
@@ -776,7 +776,7 @@ def main():
             <!-- Example 2 -->
             <div class="col-lg-6">
               <div class="card hs-card-light border h-100">
-                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle hs-dark-header">
                   <i class="bi bi-2-circle-fill"></i> Example 2: Broken Skeleton
                 </div>
                 <div class="card-body small">
@@ -820,7 +820,7 @@ def main():
             <!-- Example 3 -->
             <div class="col-lg-6">
               <div class="card hs-card-light border h-100">
-                <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle">
+                <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle hs-dark-header">
                   <i class="bi bi-3-circle-fill"></i> Example 3: Deprecated Method
                 </div>
                 <div class="card-body small">
@@ -866,7 +866,7 @@ def main():
             <!-- Example 4 -->
             <div class="col-lg-6">
               <div class="card hs-card-light border h-100">
-                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle">
+                <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle hs-dark-header">
                   <i class="bi bi-4-circle-fill"></i> Example 4: Constraint Violation
                 </div>
                 <div class="card-body small">
