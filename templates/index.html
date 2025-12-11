@@ -50,49 +50,13 @@
 <body data-bs-spy="scroll" data-bs-target="#hs-step-nav" data-bs-offset="100" tabindex="0">
 
   <!-- Top Navbar -->
-  <nav class="navbar navbar-expand-lg hs-navbar fixed-top shadow-sm">
-    <div class="container-fluid">
+  <nav class="navbar hs-navbar fixed-top shadow-sm">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
         <img src="static/logo.png" alt="Handshake AI logo" class="hs-logo-circle" />
         <span class="fw-semibold" style="color: var(--hs-text-primary);">Handshake AI &bullet; Project Columba</span>
       </a>
-      <button
-        class="navbar-toggler border-0"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarContent"
-        aria-controls="navbarContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-        <ul class="navbar-nav align-items-lg-center gap-lg-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#workflow">Workflow</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#dimensions">Dimensions</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#failure-examples">Failure Examples</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#code-difficulty">Code Difficulty</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#code-taxonomy">Code Taxonomy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#docker-setup">Docker Setup</a>
-          </li>
-          <li class="nav-item">
-            <span class="badge rounded-pill hs-pill ms-lg-2">Annotator v2.1</span>
-          </li>
-        </ul>
-      </div>
+      <span class="badge rounded-pill hs-pill">Annotator v2.1</span>
     </div>
   </nav>
 
@@ -113,6 +77,13 @@
               <a href="#overview" class="nav-link active" data-bs-dismiss="offcanvas"><span class="step-index">1</span> Overview</a>
               <a href="#workflow" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">2</span> Workflow</a>
               <a href="#dimensions" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">3</span> Dimensions</a>
+              <nav class="nav flex-column ps-3 small">
+                <a href="#dimension-1-exec" class="nav-link ps-2" data-bs-dismiss="offcanvas">Dimension 1: Execution</a>
+                <a href="#dimension-2-logic" class="nav-link ps-2" data-bs-dismiss="offcanvas">Dimension 2: Logic</a>
+                <a href="#dimension-3-explain" class="nav-link ps-2" data-bs-dismiss="offcanvas">Dimension 3: Explanation</a>
+                <a href="#dimension-4-style" class="nav-link ps-2" data-bs-dismiss="offcanvas">Dimension 4: Style</a>
+                <a href="#dimension-5-intent" class="nav-link ps-2" data-bs-dismiss="offcanvas">Dimension 5: Instruction Following</a>
+              </nav>
               <a href="#failure-examples" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">4</span> Failure Examples</a>
               <a href="#code-difficulty" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">5</span> Code Difficulty</a>
               <a href="#code-taxonomy" class="nav-link" data-bs-dismiss="offcanvas"><span class="step-index">6</span> Code Taxonomy</a>
@@ -243,7 +214,7 @@ print(numbers)  # [1, 2, 3]</code></pre>
             <p class="mb-0">Each of the 5 dimensions below is graded <strong>independently</strong>. A response does <strong>NOT</strong> need to PASS all dimensions to receive credit—evaluate each separately based on its own criteria.</p>
           </div>
           <!-- Dimension 1: Execution -->
-          <div class="card hs-card-light border mb-4">
+          <div id="dimension-1-exec" class="card hs-card-light border mb-4">
             <div class="card-header small text-success-emphasis bg-success-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-play-circle"></i> Dimension 1: Code Execution
             </div>
@@ -352,7 +323,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
           </div>
 
           <!-- Dimension 2: Logic -->
-          <div class="card hs-card-light border mb-4">
+          <div id="dimension-2-logic" class="card hs-card-light border mb-4">
             <div class="card-header small text-info-emphasis bg-info-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-diagram-2"></i> Dimension 2: Code Logic
             </div>
@@ -452,7 +423,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
           </div>
 
           <!-- Dimension 3: Explanation -->
-          <div class="card hs-card-light border mb-4">
+          <div id="dimension-3-explain" class="card hs-card-light border mb-4">
             <div class="card-header small text-warning-emphasis bg-warning-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-chat-dots"></i> Dimension 3: Code Explanation
             </div>
@@ -539,7 +510,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
           </div>
 
           <!-- Dimension 4: Style -->
-          <div class="card hs-card-light border mb-4">
+          <div id="dimension-4-style" class="card hs-card-light border mb-4">
             <div class="card-header small text-secondary-emphasis bg-secondary-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-palette"></i> Dimension 4: Code Style
             </div>
@@ -631,7 +602,7 @@ process_data([1, 2, 3])  # Does nothing or errors</code></pre>
           </div>
 
           <!-- Dimension 5: Instruction Following -->
-          <div class="card hs-card-light border mb-4">
+          <div id="dimension-5-intent" class="card hs-card-light border mb-4">
             <div class="card-header small text-danger-emphasis bg-danger-subtle border-bottom border-secondary-subtle hs-dark-header">
               <i class="bi bi-check-lg"></i> Dimension 5: Coding Instruction Following
             </div>
